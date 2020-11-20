@@ -21,9 +21,8 @@ Before using this module, you'll need to generate a key pair for your server and
 |`ssh_key_id`|`string`|Yes|A SSH public key ID to add to the VPN instance.|
 |`vpc_id`|`string`|Yes|The VPC ID in which Terraform will launch the resources.|
 |`env`|`string`|Optional - defaults to `prod`|The name of environment for WireGuard. Used to differentiate multiple deployments.|
-|`eip_id`|`string`|Optional|The EIP ID to which the VPN server will attach. Useful for avoiding changing IPs.|
+|`eip_id`|`string`|Optional|The [Elastic IP](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html) ID to which the VPN server will attach. Useful for avoiding changing IPs.|
 |`target_group_arns`|`string`|Optional|The Loadbalancer Target Group to which the vpn server ASG will attach.|
-|`associate_public_ip_address`|`boolean`|Optional - defaults to `true`|Whether or not to associate a public ip.|
 |`additional_security_group_ids`|`list`|Optional|Used to allow added access to reach the WG servers or allow loadbalancer health checks.|
 |`asg_min_size`|`integer`|Optional - default to `1`|Number of VPN servers to permit minimum, only makes sense in loadbalanced scenario.|
 |`asg_desired_capacity`|`integer`|Optional - default to `1`|Number of VPN servers to maintain, only makes sense in loadbalanced scenario.|
@@ -35,16 +34,17 @@ Before using this module, you'll need to generate a key pair for your server and
 |`wg_persistent_keepalive`|`integer`|Optional - defaults to `25`|Regularity of Keepalives, useful for NAT stability.|
 |`wg_server_private_key_param`|`string`|Optional - defaults to `/wireguard/wg-server-private-key`|The Parameter Store key to use for the VPN server Private Key.|
 |`ami_id`|`string`|Optional - defaults to the newest Ubuntu 16.04 AMI|AMI to use for the VPN server.|
+|`wg_server_interface`|`string`|Optional - defaults to eth0|Server interface to route traffic to for installations forwarding traffic to private networks.|
 
 ## Examples
 
 Please see the following examples to understand usage with the relevant options.
 
-### Simple EIP/public subnet usage
+### Simple Elastic IP/public subnet usage
 
 See [examples/simple_eip/main.tf](examples/simple_eip/main.tf) file.
 
-### Complex ELB/private subnet usage
+### Complex Elastic Load Balancer/private subnet usage
 
 See [examples/complex_elb/main.tf](examples/complex_elb/main.tf) file.
 
